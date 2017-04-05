@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+<f:view>
+    <h:outputLabel value="Strona główna"/>
+
+    <h:form>
+        <h:panelGrid columns="3">
+            <h:outputLabel value="Imię"/>
+            <h:inputText id="nameField" required="false" value="#{userBean.user.name}"/>
+            <h:message for="nameField"/>
+            <h:outputLabel value="Nazwisko"/>
+            <h:inputText id="surnameField" required="true" value="#{userBean.user.surname}"/>
+            <h:message for="surnameField"/>
+            <h:outputLabel value="Wiek"/>
+            <h:inputText id="ageField" required="true" value="#{userBean.user.age}">
+                <f:validateDoubleRange minimum="0" maximum="120"/>
+            </h:inputText>
+            <h:message for="ageField"/>
+            <h:outputLabel value="Województwo"/>
+            <h:selectOneMenu id="voivodeshipField" value="#{userBean.user.voivodeship}" valueChangeListener="#{userBean.activateAdd}" onchange="submit()" immediate="true" >
+                <f:selectItem itemValue="Podkarpackie"/>
+                <f:selectItem itemValue="Małopolskie"/>
+                <f:selectItem itemValue="Świętokrzyskie" />
+            </h:selectOneMenu>
+            <h:message for="voivodeshipField"/>
+            <h:panelGroup>
+                <h:commandButton binding="#{userBean.add}" value="Dodaj" disabled="true" action="#{userBean.accept}"/>
+            </h:panelGroup>
+        </h:panelGrid>
+    </h:form>
+</f:view>
+</html>
