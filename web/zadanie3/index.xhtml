@@ -22,7 +22,8 @@
             </h:inputText>
             <h:message for="ageField"/>
             <h:outputLabel value="Województwo"/>
-            <h:selectOneMenu id="voivodeshipField" value="#{userBean.user.voivodeship}" valueChangeListener="#{userBean.activateAdd}" onchange="submit()" immediate="true" >
+            <h:selectOneMenu id="voivodeshipField" value="#{userBean.user.voivodeship}" valueChangeListener="#{userBean.activateAdd}" onchange="submit()" immediate="true" hideNoSelectionOption="true" >
+                <f:selectItem itemValue="#{null}" itemLabel="--wybierz--" noSelectionOption="true"  />
                 <f:selectItem itemValue="Podkarpackie"/>
                 <f:selectItem itemValue="Małopolskie"/>
                 <f:selectItem itemValue="Świętokrzyskie" />

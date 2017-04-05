@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+<h:head>
+    tut
+</h:head>
+<h:body>
+        <h:form>
+            <h:panelGrid colSpans="3,2,2,5">
+                <h:outputLabel for="ageID" value="Enter your age (18-65)"></h:outputLabel>
+                <h:inputText value="#{ajaxBean.age}" id="ageID">
+                    <f:validateLongRange minimum="18" maximum="65" />
+                </h:inputText>
+                <h:commandButton value="validate age">
+                    <f:ajax execute="ageID" render="output"
+                            listener="#{ajaxBean.facetListener}" />
+                </h:commandButton>
+                <h:message for="ageID" id="ageMessage"></h:message>
+
+                <h:outputLabel for="nameID"
+                               value="Enter your first name (3 -20 letters)"></h:outputLabel>
+                <h:inputText value="#{ajaxBean.name}" id="nameID" required="true">
+                    <f:validateLength minimum="3" maximum="20" />
+                    <f:ajax execute="nameID" render="output"
+                            listener="#{ajaxBean.facetListener}" />
+                </h:inputText>
+
+
+            </h:panelGrid>
+            <h:commandButton value="validate both">
+                <f:ajax execute="@form" render="output"
+                        listener="#{ajaxBean.facetListener}" />
+            </h:commandButton>
+            <h:messages id="messages"/>
+            <h:outputText id="output" value="#{ajaxBean.name}"/>
+  </h:form>
+</h:body>
+</html>

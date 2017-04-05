@@ -5,19 +5,26 @@
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
-<f:view>
+<h:head>
+    <title>Laboratorium 4</title>
+</h:head>
+
+<h:body>
     <h:outputLabel value="Zadanie 5"/>
 
     <h:form>
         <h:panelGrid columns="3">
 
             <h:outputLabel value="Imię"/>
-            <h:inputText value="#{questionnaireBean.name}" id="nameField" required="true"/>
+            <h:inputText value="#{questionnaireBean.name}" id="nameField" required="true">
+                <!--<f:ajax event="blur" render="output"/>-->
+            </h:inputText>
             <h:message for="nameField" style="color: red"></h:message>
 
             <h:outputLabel value="Adres e-mail"/>
             <h:inputText value="#{questionnaireBean.email}" id="emailField" required="true">
                 <f:validateRegex pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$"/>
+                <!--<f:ajax event="blur" render="output" />-->
             </h:inputText>
             <h:message for="emailField" style="color: red"></h:message>
 
@@ -39,8 +46,8 @@
             <h:outputLabel value="Płeć"/>
             <h:selectOneMenu value="#{questionnaireBean.sex}" id="sexField" required="true">
                 <f:selectItem itemValue="#{null}" itemLabel="--wybierz--" />
-                <f:selectItem itemValue="Mężczyzna" itemLabel="Mężczyzna"/>
-                <f:selectItem itemValue="Kobieta" itemLabel="Kobieta"/>
+                <f:selectItem itemValue="M" itemLabel="Mężczyzna"/>
+                <f:selectItem itemValue="F" itemLabel="Kobieta"/>
             </h:selectOneMenu>
             <h:message for="sexField" style="color: red"></h:message>
 
@@ -60,51 +67,77 @@
             <h:inputText value="#{questionnaireBean.size}" id="sizeField" required="false">
                 <f:validateLongRange minimum="20" maximum="50"/>
             </h:inputText>
+            <h:message for="sizeField"/>
 
-            <!--pytania-->
+            <h:panelGroup />
+            <h:panelGroup>
+                <h:commandButton value="Render questions">
+                    <f:ajax execute="@form" render="userQuestions"
+                            listener="#{questionnaireBean.checkUser}" />
+                </h:commandButton>
+            </h:panelGroup>
+            <h:panelGroup />
 
-            <h:outputLabel value="Ile jesteś w stanie przeznaczyc miesięcznie na zakup ubrania?"/>
-            <h:selectOneMenu id="moneyOnClothesPerMonth" value="#{questionnaireBean.moneyOnClothesPerMonth}">
-                <f:selectItem itemValue="100zł"/>
-                <f:selectItem itemValue="100-500zł"/>
-                <f:selectItem itemValue="500-1000zł"/>
-                <f:selectItem itemValue="powyżej 1000zł"/>
-            </h:selectOneMenu>
-            <h:message for="moneyOnClothesPerMonth" style="color: red"/>
+            <h:panelGroup />
+            <h:panelGroup>
+                <h:panelGrid id="userQuestions" columns="2">
+                    <h:outputText value="#{questionnaireBean.name} #{questionnaireBean.email} #{questionnaireBean.sex} #{questionnaireBean.client} #{questionnaireBean.male}"/>
+                </h:panelGrid>
+            </h:panelGroup>
+            <h:panelGroup />
 
-            <h:outputLabel value="Gdzie najczęściej dokonujesz zakupów ubrania?"/>
-            <h:selectManyListbox id="mostVisitedShops" value="#{questionnaireBean.mostVisitedShops}">
-                <f:selectItem itemValue="Sklep firmowy"/>
-                <f:selectItem itemValue="Hipermarket"/>
-                <f:selectItem itemValue="Bazar"/>
-                <f:selectItem itemValue="Sklep z odzieżą używaną"/>
-            </h:selectManyListbox>
-            <h:message for="mostVisitedShops" style="color: red"/>
 
-            <h:outputLabel value="Jak często dokonujesz zakupu ubrania?"/>
-            <h:selectOneMenu id="howRecentlyBuying" value="#{questionnaireBean.howRecentlyBuying}">
-                <f:selectItem itemValue="Codziennie"/>
-                <f:selectItem itemValue="Raz w tygodniu"/>
-                <f:selectItem itemValue="Raz w miesiącu"/>
-                <f:selectItem itemValue="Kilka razy w roku"/>
-            </h:selectOneMenu>
-            <h:message for="howRecentlyBuying" style="color:red"/>
-
-            <h:outputLabel value="W jakich kolorach preferujesz ubrania?"/>
-            <h:selectManyListbox id="preferredColors" value="#{questionnaireBean.preferredColors}">
-                <f:selectItem itemValue="Kolorowo-jaskrawych"/>
-                <f:selectItem itemValue="Stonowanych w szarościach"/>
-                <f:selectItem itemValue="W czerni i bieli"/>
-                <f:selectItem itemValue="W samej czerni"/>
-            </h:selectManyListbox>
-            <h:message for="preferredColors" style="color: red"/>
-            <!--submit-->
-
+            <h:panelGroup />
             <h:panelGroup>
                 <h:commandButton action="#{questionnaireBean.forward}" value="Potwierdź"/>
             </h:panelGroup>
+            <h:panelGroup />
 
         </h:panelGrid>
     </h:form>
-</f:view>
+
+</h:body>
 </html>
+
+
+
+
+        <!--pytania-->
+
+        <!--<h:outputLabel value="Ile jesteś w stanie przeznaczyc miesięcznie na zakup ubrania?"/>-->
+        <!--<h:selectOneMenu id="moneyOnClothesPerMonth" value="#{questionnaireBean.moneyOnClothesPerMonth}">-->
+        <!--<f:selectItem itemValue="100zł"/>-->
+        <!--<f:selectItem itemValue="100-500zł"/>-->
+        <!--<f:selectItem itemValue="500-1000zł"/>-->
+        <!--<f:selectItem itemValue="powyżej 1000zł"/>-->
+        <!--</h:selectOneMenu>-->
+        <!--<h:message for="moneyOnClothesPerMonth" style="color: red"/>-->
+
+        <!--<h:outputLabel value="Gdzie najczęściej dokonujesz zakupów ubrania?"/>-->
+        <!--<h:selectManyListbox id="mostVisitedShops" value="#{questionnaireBean.mostVisitedShops}">-->
+        <!--<f:selectItem itemValue="Sklep firmowy"/>-->
+        <!--<f:selectItem itemValue="Hipermarket"/>-->
+        <!--<f:selectItem itemValue="Bazar"/>-->
+        <!--<f:selectItem itemValue="Sklep z odzieżą używaną"/>-->
+        <!--</h:selectManyListbox>-->
+        <!--<h:message for="mostVisitedShops" style="color: red"/>-->
+
+        <!--<h:outputLabel value="Jak często dokonujesz zakupu ubrania?"/>-->
+        <!--<h:selectOneMenu id="howRecentlyBuying" value="#{questionnaireBean.howRecentlyBuying}">-->
+        <!--<f:selectItem itemValue="Codziennie"/>-->
+        <!--<f:selectItem itemValue="Raz w tygodniu"/>-->
+        <!--<f:selectItem itemValue="Raz w miesiącu"/>-->
+        <!--<f:selectItem itemValue="Kilka razy w roku"/>-->
+        <!--</h:selectOneMenu>-->
+        <!--<h:message for="howRecentlyBuying" style="color:red"/>-->
+
+        <!--<h:outputLabel value="W jakich kolorach preferujesz ubrania?"/>-->
+        <!--<h:selectManyListbox id="preferredColors" value="#{questionnaireBean.preferredColors}">-->
+        <!--<f:selectItem itemValue="Kolorowo-jaskrawych"/>-->
+        <!--<f:selectItem itemValue="Stonowanych w szarościach"/>-->
+        <!--<f:selectItem itemValue="W czerni i bieli"/>-->
+        <!--<f:selectItem itemValue="W samej czerni"/>-->
+        <!--</h:selectManyListbox>-->
+        <!--<h:message for="preferredColors" style="color: red"/>-->
+        <!--&lt;!&ndash;submit&ndash;&gt;-->
+
