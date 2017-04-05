@@ -23,30 +23,26 @@
 
     <c:choose>
         <c:when test="#{questionnaireBean.client}">
-
             <h:outputText value="Kiedy ostatnio robiłeś u nas zakupy? #{questionnaireBean.howRecentlyBuying}"/>
-
+            <br/>
             <c:choose>
                 <c:when test="#{questionnaireBean.male}">
                     <h:outputText value="Czy jesteś zadowolony z zakupu? #{questionnaireBean.shoppingSatisfaction}"/>
+                    <br/>
                     <h:outputText value="Czy jesteś zadowolony z naszych pracowników? #{questionnaireBean.staffSatisfaction}"/>
+                    <br/>
                 </c:when>
                 <c:otherwise>
                     <h:outputText value="Czy jesteś zadowolona z zakupu? #{questionnaireBean.shoppingSatisfaction}"/>
+                    <br/>
                     <h:outputText value="Czy jesteś zadowolona z naszych pracowników? #{questionnaireBean.staffSatisfaction}"/>
+                    <br/>
                 </c:otherwise>
             </c:choose>
-
             <h:outputText value="Uwagi: #{questionnaireBean.otherOpinion}"/>
-
-
         </c:when>
         <c:otherwise>
-
-
-
             <h:outputText value="Ile jesteś w stanie przeznaczyc miesięcznie na zakup ubrania? #{questionnaireBean.moneyOnClothesPerMonth}"/>
-
             <br/>
             <h:outputText value="Gdzie najczęściej dokonujesz zakupów ubrania?"/>
             <ui:repeat value="#{questionnaireBean.mostVisitedShops}" var="shop">
@@ -63,15 +59,7 @@
                 <h:outputText value="#{color}"/>
                 <h:outputText value=" "/>
             </ui:repeat>
-
-
-
-
         </c:otherwise>
-
     </c:choose>
-
-
-
 </f:view>
 </html>

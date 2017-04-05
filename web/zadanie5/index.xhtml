@@ -44,37 +44,31 @@
 
 
             <h:outputLabel value="Płeć"/>
-            <h:selectOneMenu value="#{questionnaireBean.sex}" id="sexField" required="true">
-                <f:selectItem itemValue="#{null}" itemLabel="--wybierz--" />
+            <h:selectOneMenu value="#{questionnaireBean.sex}" id="sexField" required="true" hideNoSelectionOption="true">
+                <f:selectItem itemValue="#{null}" itemLabel="--wybierz--" noSelectionOption="true"/>
                 <f:selectItem itemValue="M" itemLabel="Mężczyzna"/>
                 <f:selectItem itemValue="F" itemLabel="Kobieta"/>
+                <f:ajax execute="sexField"/>
             </h:selectOneMenu>
             <h:message for="sexField" style="color: red"></h:message>
 
             <h:outputLabel value="Wykształcenie"/>
-            <h:selectOneMenu value="#{questionnaireBean.education}" id="educationField" required="false">
-                <f:selectItem itemValue="#{null}" itemLabel="--wybierz--" />
+            <h:selectOneMenu value="#{questionnaireBean.education}" id="educationField" required="false" hideNoSelectionOption="true">
+                <f:selectItem itemValue="#{null}" itemLabel="--wybierz--" noSelectionOption="true"/>
                 <f:selectItem itemValue="Podstawowe" itemLabel="Podstawowe"/>
                 <f:selectItem itemValue="Gimnazjalne" itemLabel="Gimnazjalne"/>
                 <f:selectItem itemValue="Zasadnicze" itemLabel="Zasadnicze"/>
                 <f:selectItem itemValue="Średnie" itemLabel="Średnie"/>
                 <f:selectItem itemValue="Wyższe" itemLabel="Wyższe"/>
+                <f:ajax execute="educationField"/>
             </h:selectOneMenu>
             <h:message for="educationField" style="color: red"></h:message>
-
 
             <h:outputLabel value="Rozmiar"/>
             <h:inputText value="#{questionnaireBean.size}" id="sizeField" required="false">
                 <f:validateLongRange minimum="20" maximum="50"/>
             </h:inputText>
-            <h:message for="sizeField"/>
-
-            <h:panelGroup />
-            <h:panelGroup>
-                <h:commandButton action="#{questionnaireBean.forward}" value="Potwierdź"/>
-            </h:panelGroup>
-            <h:panelGroup />
-
+            <h:message for="sizeField" style="color: red"/>
 
         </h:panelGrid>
 
@@ -85,7 +79,6 @@
 
         <h:panelGroup id="userQuestions" >
             <h:panelGrid  columns="2" rendered="#{questionnaireBean.renderQuestions}">
-
                 <c:choose>
                     <c:when test="#{questionnaireBean.male}">
                         <h:outputText value="Kiedy ostatnio robiłeś u nas zakupy?" rendered="#{questionnaireBean.client}"/>
@@ -100,10 +93,6 @@
                     <f:selectItem itemValue="W zeszłym miesiącu"/>
                     <f:selectItem itemValue="Nie pamiętam"/>
                 </h:selectOneMenu>
-
-                <!--NASTĘPNE PYTANIE-->
-
-
                 <c:choose>
                     <c:when test="#{questionnaireBean.male}">
                         <h:outputText value="Czy jesteś zadowolony z zakupu?" rendered="#{questionnaireBean.client}"/>
@@ -119,8 +108,6 @@
                     <f:selectItem itemValue="Nie"/>
                     <f:selectItem itemValue="Nie wiem"/>
                 </h:selectOneMenu>
-
-                <!--NASTĘPNE PYTANIE-->
                 <c:choose>
                     <c:when test="#{questionnaireBean.male}">
                         <h:outputText value="Czy jesteś zadowolony z naszych pracowników?" rendered="#{questionnaireBean.client}"/>
@@ -136,15 +123,8 @@
                     <f:selectItem itemValue="Nie"/>
                     <f:selectItem itemValue="Nie wiem"/>
                 </h:selectOneMenu>
-                <!--NASTĘPNE PYTANIE-->
-
                 <h:outputText value="Wpisz swoje uwagi" rendered="#{questionnaireBean.client}"/>
                 <h:inputTextarea id="otherOpinion" value="#{questionnaireBean.otherOpinion}" rows="3" rendered="#{questionnaireBean.client}"/>
-
-
-
-                <!--PYTANIA DLA OBCYCH-->
-
                 <h:outputText value="Ile jesteś w stanie przeznaczyc miesięcznie na zakup ubrania?" rendered="#{not questionnaireBean.client}"/>
                 <h:selectOneMenu value="#{questionnaireBean.moneyOnClothesPerMonth}" id="moneyOnClothesPerMonth" rendered="#{not questionnaireBean.client}">
                     <f:selectItem itemValue="Do 100 zł"/>
@@ -152,9 +132,6 @@
                     <f:selectItem itemValue="500-1000 zł"/>
                     <f:selectItem itemValue="powyżej 1000 zł"/>
                 </h:selectOneMenu>
-
-                <!--NASTĘPNE PYTANIE-->
-
                 <h:outputText value="Gdzie najczęściej dokonujesz zakupów ubrania?" rendered="#{not questionnaireBean.client}"/>
                 <h:selectManyCheckbox value="#{questionnaireBean.mostVisitedShops}" id="mostVisitedShops" rendered="#{not questionnaireBean.client}">
                     <f:selectItem itemValue="Sklep firmowy"/>
@@ -162,9 +139,6 @@
                     <f:selectItem itemValue="Bazar"/>
                     <f:selectItem itemValue="Sklep z odzieżą używaną"/>
                 </h:selectManyCheckbox>
-
-                <!--NASTĘPNE PYTANIE-->
-
                 <h:outputText value="Jak często dokonujesz zakupu ubrania?" rendered="#{not questionnaireBean.client}"/>
                 <h:selectOneMenu value="#{questionnaireBean.howRecentlyBuying}" id="howRecentlyBuying" rendered="#{not questionnaireBean.client}">
                     <f:selectItem itemValue="Codziennie"/>
@@ -172,19 +146,6 @@
                     <f:selectItem itemValue="Raz w miesiącu"/>
                     <f:selectItem itemValue="Kilka razy do roku"/>
                 </h:selectOneMenu>
-
-                <!--NASTĘPNE PYTANIE-->
-
-                <!--<h:outputText value="W jakich kolorach preferujesz ubrania?" rendered="#{not questionnaireBean.client}"/>-->
-                <!--<h:selectOneMenu value="#{questionnaireBean.preferredColors}" id="preferredColors" rendered="#{not questionnaireBean.client}">-->
-                    <!--<f:selectItem itemValue="Kolorowo-jaskrawych"/>-->
-                    <!--<f:selectItem itemValue="Stonowanych w szarościach"/>-->
-                    <!--<f:selectItem itemValue="W czerni i bieli"/>-->
-                    <!--<f:selectItem itemValue="W samej czerni"/>-->
-                <!--</h:selectOneMenu>-->
-
-                <!--NASTĘPNE PYTANIE-->
-
                 <h:outputText value="Jakiego rodzaju ubrania najchętniej kupujesz?" rendered="#{not questionnaireBean.client}"/>
                 <h:selectManyCheckbox value="#{questionnaireBean.favouriteClothes}" id="favouriteClothes" rendered="#{not questionnaireBean.client}">
                     <c:choose>
@@ -204,57 +165,19 @@
                         </c:otherwise>
                     </c:choose>
                 </h:selectManyCheckbox>
-
+                <h:outputText value="W jakich kolorach preferujesz ubrania?" rendered="#{not questionnaireBean.client}"/>
+                <h:selectManyListbox value="#{questionnaireBean.preferredColors}" id="preferredColors" rendered="#{not questionnaireBean.client}">
+                    <f:selectItem itemValue="Kolorowo-jaskrawych"/>
+                    <f:selectItem itemValue="Stonowanych w szarościach"/>
+                    <f:selectItem itemValue="W czerni i bieli"/>
+                    <f:selectItem itemValue="W samej czerni"/>
+                </h:selectManyListbox>
             </h:panelGrid>
         </h:panelGroup>
 
-
-
+        <h:commandButton action="#{questionnaireBean.forward}" value="Potwierdź"/>
 
     </h:form>
 
 </h:body>
 </html>
-
-
-
-
-        <!--pytania-->
-
-        <!--<h:outputLabel value="Ile jesteś w stanie przeznaczyc miesięcznie na zakup ubrania?"/>-->
-        <!--<h:selectOneMenu id="moneyOnClothesPerMonth" value="#{questionnaireBean.moneyOnClothesPerMonth}">-->
-        <!--<f:selectItem itemValue="100zł"/>-->
-        <!--<f:selectItem itemValue="100-500zł"/>-->
-        <!--<f:selectItem itemValue="500-1000zł"/>-->
-        <!--<f:selectItem itemValue="powyżej 1000zł"/>-->
-        <!--</h:selectOneMenu>-->
-        <!--<h:message for="moneyOnClothesPerMonth" style="color: red"/>-->
-
-        <!--<h:outputLabel value="Gdzie najczęściej dokonujesz zakupów ubrania?"/>-->
-        <!--<h:selectManyListbox id="mostVisitedShops" value="#{questionnaireBean.mostVisitedShops}">-->
-        <!--<f:selectItem itemValue="Sklep firmowy"/>-->
-        <!--<f:selectItem itemValue="Hipermarket"/>-->
-        <!--<f:selectItem itemValue="Bazar"/>-->
-        <!--<f:selectItem itemValue="Sklep z odzieżą używaną"/>-->
-        <!--</h:selectManyListbox>-->
-        <!--<h:message for="mostVisitedShops" style="color: red"/>-->
-
-        <!--<h:outputLabel value="Jak często dokonujesz zakupu ubrania?"/>-->
-        <!--<h:selectOneMenu id="howRecentlyBuying" value="#{questionnaireBean.howRecentlyBuying}">-->
-        <!--<f:selectItem itemValue="Codziennie"/>-->
-        <!--<f:selectItem itemValue="Raz w tygodniu"/>-->
-        <!--<f:selectItem itemValue="Raz w miesiącu"/>-->
-        <!--<f:selectItem itemValue="Kilka razy w roku"/>-->
-        <!--</h:selectOneMenu>-->
-        <!--<h:message for="howRecentlyBuying" style="color:red"/>-->
-
-        <!--<h:outputLabel value="W jakich kolorach preferujesz ubrania?"/>-->
-        <!--<h:selectManyListbox id="preferredColors" value="#{questionnaireBean.preferredColors}">-->
-        <!--<f:selectItem itemValue="Kolorowo-jaskrawych"/>-->
-        <!--<f:selectItem itemValue="Stonowanych w szarościach"/>-->
-        <!--<f:selectItem itemValue="W czerni i bieli"/>-->
-        <!--<f:selectItem itemValue="W samej czerni"/>-->
-        <!--</h:selectManyListbox>-->
-        <!--<h:message for="preferredColors" style="color: red"/>-->
-        <!--&lt;!&ndash;submit&ndash;&gt;-->
-
