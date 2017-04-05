@@ -18,9 +18,15 @@
             <h:message for="surnameField"/>
             <h:outputLabel value="Wiek"/>
             <h:inputText id="ageField" required="true" value="#{userBean.user.age}">
-                <f:validateDoubleRange minimum="0" maximum="120"/>
+                <f:validateLongRange minimum="0" maximum="120"/>
             </h:inputText>
             <h:message for="ageField"/>
+            <h:outputLabel value="Płeć"/>
+            <h:selectOneRadio id="sexField" value="#{userBean.user.sex}">
+                <f:selectItem itemValue="Mężczyzna" itemLabel="M"/>
+                <f:selectItem itemValue="Kobieta" itemLabel="F"/>
+            </h:selectOneRadio>
+            <h:message for="sexField"/>
             <h:outputLabel value="Województwo"/>
             <h:selectOneMenu id="voivodeshipField" value="#{userBean.user.voivodeship}" valueChangeListener="#{userBean.activateAdd}" onchange="submit()" immediate="true" hideNoSelectionOption="true" >
                 <f:selectItem itemValue="#{null}" itemLabel="--wybierz--" noSelectionOption="true"  />

@@ -4,7 +4,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
+      xmlns:f="http://xmlns.jcp.org/jsf/core" xmlns:g="http://java.sun.com/jsf/html">
 <f:view>
     <h:outputLabel value="Wyniki"/>
     <h:dataTable id="items" value="#{userDatabaseBean.userList}" var="user">
@@ -16,6 +16,9 @@
         </h:column>
         <h:column>
             <h:outputLabel value="#{user.age}"/>
+        </h:column>
+        <h:column>
+            <h:outputLabel value="#{user.sex}"/>
         </h:column>
         <h:column>
             <h:outputText value="#{user.voivodeship}"/>
