@@ -4,7 +4,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
+      xmlns:f="http://xmlns.jcp.org/jsf/core" xmlns:c="http://java.sun.com/jsp/jstl/core">
 <h:head>
     <title>Laboratorium 4</title>
 </h:head>
@@ -71,29 +71,146 @@
 
             <h:panelGroup />
             <h:panelGroup>
-                <h:commandButton value="Render questions">
-                    <f:ajax execute="@form" render="userQuestions"
-                            listener="#{questionnaireBean.checkUser}" />
-                </h:commandButton>
-            </h:panelGroup>
-            <h:panelGroup />
-
-            <h:panelGroup />
-            <h:panelGroup>
-                <h:panelGrid id="userQuestions" columns="2">
-                    <h:outputText value="#{questionnaireBean.name} #{questionnaireBean.email} #{questionnaireBean.sex} #{questionnaireBean.client} #{questionnaireBean.male}"/>
-                </h:panelGrid>
-            </h:panelGroup>
-            <h:panelGroup />
-
-
-            <h:panelGroup />
-            <h:panelGroup>
                 <h:commandButton action="#{questionnaireBean.forward}" value="Potwierdź"/>
             </h:panelGroup>
             <h:panelGroup />
 
+
         </h:panelGrid>
+
+        <h:commandButton value="Render questions">
+            <f:ajax execute="@form" render="userQuestions"
+                    listener="#{questionnaireBean.checkUser}" />
+        </h:commandButton>
+
+        <h:panelGroup id="userQuestions" >
+            <h:panelGrid  columns="2" rendered="#{questionnaireBean.renderQuestions}">
+
+                <c:choose>
+                    <c:when test="#{questionnaireBean.male}">
+                        <h:outputText value="Kiedy ostatnio robiłeś u nas zakupy?" rendered="#{questionnaireBean.client}"/>
+                    </c:when>
+                    <c:otherwise>
+                        <h:outputText value="Kiedy ostatnio robiłaś u nas zakupy?" rendered="#{questionnaireBean.client}"/>
+                    </c:otherwise>
+                </c:choose>
+                <h:selectOneMenu value="#{questionnaireBean.recentShopping}" id="recentShopping" rendered="#{questionnaireBean.client}">
+                    <f:selectItem itemValue="Wczoraj"/>
+                    <f:selectItem itemValue="W zeszłym tygodniu"/>
+                    <f:selectItem itemValue="W zeszłym miesiącu"/>
+                    <f:selectItem itemValue="Nie pamiętam"/>
+                </h:selectOneMenu>
+
+                <!--NASTĘPNE PYTANIE-->
+
+
+                <c:choose>
+                    <c:when test="#{questionnaireBean.male}">
+                        <h:outputText value="Czy jesteś zadowolony z zakupu?" rendered="#{questionnaireBean.client}"/>
+                    </c:when>
+                    <c:otherwise>
+                        <h:outputText value="Czy jesteś zadowolona z zakupu?" rendered="#{questionnaireBean.client}"/>
+                    </c:otherwise>
+                </c:choose>
+                <h:selectOneMenu value="#{questionnaireBean.shoppingSatisfaction}" id="shoppingSatisfaction" rendered="#{questionnaireBean.client}">
+                    <f:selectItem itemValue="Tak"/>
+                    <f:selectItem itemValue="Raczej tak"/>
+                    <f:selectItem itemValue="Raczej nie"/>
+                    <f:selectItem itemValue="Nie"/>
+                    <f:selectItem itemValue="Nie wiem"/>
+                </h:selectOneMenu>
+
+                <!--NASTĘPNE PYTANIE-->
+                <c:choose>
+                    <c:when test="#{questionnaireBean.male}">
+                        <h:outputText value="Czy jesteś zadowolony z naszych pracowników?" rendered="#{questionnaireBean.client}"/>
+                    </c:when>
+                    <c:otherwise>
+                        <h:outputText value="Czy jesteś zadowolona z naszych pracowników?" rendered="#{questionnaireBean.client}"/>
+                    </c:otherwise>
+                </c:choose>
+                <h:selectOneMenu value="#{questionnaireBean.staffSatisfaction}" id="staffSatisfaction" rendered="#{questionnaireBean.client}">
+                    <f:selectItem itemValue="Tak"/>
+                    <f:selectItem itemValue="Raczej tak"/>
+                    <f:selectItem itemValue="Raczej nie"/>
+                    <f:selectItem itemValue="Nie"/>
+                    <f:selectItem itemValue="Nie wiem"/>
+                </h:selectOneMenu>
+                <!--NASTĘPNE PYTANIE-->
+
+                <h:outputText value="Wpisz swoje uwagi" rendered="#{questionnaireBean.client}"/>
+                <h:inputTextarea id="otherOpinion" value="#{questionnaireBean.otherOpinion}" rows="3" rendered="#{questionnaireBean.client}"/>
+
+
+
+                <!--PYTANIA DLA OBCYCH-->
+
+                <h:outputText value="Ile jesteś w stanie przeznaczyc miesięcznie na zakup ubrania?" rendered="#{not questionnaireBean.client}"/>
+                <h:selectOneMenu value="#{questionnaireBean.moneyOnClothesPerMonth}" id="moneyOnClothesPerMonth" rendered="#{not questionnaireBean.client}">
+                    <f:selectItem itemValue="Do 100 zł"/>
+                    <f:selectItem itemValue="100-500 zł"/>
+                    <f:selectItem itemValue="500-1000 zł"/>
+                    <f:selectItem itemValue="powyżej 1000 zł"/>
+                </h:selectOneMenu>
+
+                <!--NASTĘPNE PYTANIE-->
+
+                <h:outputText value="Gdzie najczęściej dokonujesz zakupów ubrania?" rendered="#{not questionnaireBean.client}"/>
+                <h:selectManyCheckbox value="#{questionnaireBean.mostVisitedShops}" id="mostVisitedShops" rendered="#{not questionnaireBean.client}">
+                    <f:selectItem itemValue="Sklep firmowy"/>
+                    <f:selectItem itemValue="Hipermarket"/>
+                    <f:selectItem itemValue="Bazar"/>
+                    <f:selectItem itemValue="Sklep z odzieżą używaną"/>
+                </h:selectManyCheckbox>
+
+                <!--NASTĘPNE PYTANIE-->
+
+                <h:outputText value="Jak często dokonujesz zakupu ubrania?" rendered="#{not questionnaireBean.client}"/>
+                <h:selectOneMenu value="#{questionnaireBean.howRecentlyBuying}" id="howRecentlyBuying" rendered="#{not questionnaireBean.client}">
+                    <f:selectItem itemValue="Codziennie"/>
+                    <f:selectItem itemValue="Raz w tygodniu"/>
+                    <f:selectItem itemValue="Raz w miesiącu"/>
+                    <f:selectItem itemValue="Kilka razy do roku"/>
+                </h:selectOneMenu>
+
+                <!--NASTĘPNE PYTANIE-->
+
+                <!--<h:outputText value="W jakich kolorach preferujesz ubrania?" rendered="#{not questionnaireBean.client}"/>-->
+                <!--<h:selectOneMenu value="#{questionnaireBean.preferredColors}" id="preferredColors" rendered="#{not questionnaireBean.client}">-->
+                    <!--<f:selectItem itemValue="Kolorowo-jaskrawych"/>-->
+                    <!--<f:selectItem itemValue="Stonowanych w szarościach"/>-->
+                    <!--<f:selectItem itemValue="W czerni i bieli"/>-->
+                    <!--<f:selectItem itemValue="W samej czerni"/>-->
+                <!--</h:selectOneMenu>-->
+
+                <!--NASTĘPNE PYTANIE-->
+
+                <h:outputText value="Jakiego rodzaju ubrania najchętniej kupujesz?" rendered="#{not questionnaireBean.client}"/>
+                <h:selectManyCheckbox value="#{questionnaireBean.favouriteClothes}" id="favouriteClothes" rendered="#{not questionnaireBean.client}">
+                    <c:choose>
+                        <c:when test="#{questionnaireBean.male}">
+                            <f:selectItem itemValue="Spodnie"/>
+                            <f:selectItem itemValue="Spodenki"/>
+                            <f:selectItem itemValue="Garnitury"/>
+                            <f:selectItem itemValue="Koszule"/>
+                            <f:selectItem itemValue="Krawaty"/>
+                        </c:when>
+                        <c:otherwise>
+                            <f:selectItem itemValue="Garsonki"/>
+                            <f:selectItem itemValue="Bluzki"/>
+                            <f:selectItem itemValue="Spódniczki"/>
+                            <f:selectItem itemValue="Spodnie"/>
+                            <f:selectItem itemValue="Sukienki"/>
+                        </c:otherwise>
+                    </c:choose>
+                </h:selectManyCheckbox>
+
+            </h:panelGrid>
+        </h:panelGroup>
+
+
+
+
     </h:form>
 
 </h:body>

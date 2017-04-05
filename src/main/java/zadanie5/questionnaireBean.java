@@ -25,8 +25,24 @@ public class questionnaireBean {
     private String howRecentlyBuying;
     private String[] preferredColors;
 
+    private String recentShopping;
+    private String[] favouriteClothes;
+    private String shoppingSatisfaction;
+    private String staffSatisfaction;
+    private String otherOpinion;
+
+
     private boolean isClient;
     private boolean isMale;
+    private boolean renderQuestions;
+
+    public String[] getFavouriteClothes() {
+        return favouriteClothes;
+    }
+
+    public void setFavouriteClothes(String[] favouriteClothes) {
+        this.favouriteClothes = favouriteClothes;
+    }
 
     public String forward() {
         return "wyniki.xhtml";
@@ -120,6 +136,14 @@ public class questionnaireBean {
         this.preferredColors = preferredColors;
     }
 
+    public boolean isRenderQuestions() {
+        return renderQuestions;
+    }
+
+    public void setRenderQuestions(boolean renderQuestions) {
+        this.renderQuestions = renderQuestions;
+    }
+
     public boolean isClient() {
         return isClient;
     }
@@ -136,24 +160,56 @@ public class questionnaireBean {
         isMale = male;
     }
 
+    public String getRecentShopping() {
+        return recentShopping;
+    }
+
+    public void setRecentShopping(String recentShopping) {
+        this.recentShopping = recentShopping;
+    }
+
+    public String getShoppingSatisfaction() {
+        return shoppingSatisfaction;
+    }
+
+    public void setShoppingSatisfaction(String shoppingSatisfaction) {
+        this.shoppingSatisfaction = shoppingSatisfaction;
+    }
+
+    public String getStaffSatisfaction() {
+        return staffSatisfaction;
+    }
+
+    public void setStaffSatisfaction(String staffSatisfaction) {
+        this.staffSatisfaction = staffSatisfaction;
+    }
+
+    public String getOtherOpinion() {
+        return otherOpinion;
+    }
+
+    public void setOtherOpinion(String otherOpinion) {
+        this.otherOpinion = otherOpinion;
+    }
+
     public void checkUser(javax.faces.event.AjaxBehaviorEvent e) {
-        if(email!=null && name!=null) {
+
+        if(email!=null && name!=null && sex != null) {
             if(email.equals(name)) {
                 isClient = true;
             }
             else {
                 isClient = false;
             }
-        }
-
-        if(sex != null) {
             if(sex.equals("M")) {
                 isMale = true;
             }
             else {
                 isMale = false;
             }
+            renderQuestions = true;
         }
+
     }
 
     public void inputListener(javax.faces.event.AjaxBehaviorEvent event)

@@ -4,7 +4,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
+      xmlns:f="http://xmlns.jcp.org/jsf/core" xmlns:c="http://java.sun.com/jsp/jstl/core">
 <f:view>
     <h:outputLabel value="Wyniki ankiety"/>
     <br/>
@@ -20,24 +20,57 @@
     <br/>
     <h:outputText value="Rozmiar: #{questionnaireBean.size}"/>
     <br/>
-    <h:outputText value="Ile jesteś w stanie przeznaczyc miesięcznie na zakup ubrania? #{questionnaireBean.moneyOnClothesPerMonth}"/>
 
-    <br/>
-    <h:outputText value="Gdzie najczęściej dokonujesz zakupów ubrania?"/>
-    <ui:repeat value="#{questionnaireBean.mostVisitedShops}" var="shop">
-        <h:outputText value="#{shop}"/>
-        <h:outputText value=" "/>
-    </ui:repeat>
+    <c:choose>
+        <c:when test="#{questionnaireBean.client}">
 
-    <br/>
-    <h:outputText value="Jak często dokonujesz zakupu ubrania? #{questionnaireBean.howRecentlyBuying}"/>
+            <h:outputText value="Kiedy ostatnio robiłeś u nas zakupy? #{questionnaireBean.howRecentlyBuying}"/>
 
-    <br/>
-    <h:outputText value="W jakich kolorach preferujesz ubrania? "/>
-    <ui:repeat value="#{questionnaireBean.preferredColors}" var="color">
-        <h:outputText value="#{color}"/>
-        <h:outputText value=" "/>
-    </ui:repeat>
+            <c:choose>
+                <c:when test="#{questionnaireBean.male}">
+                    <h:outputText value="Czy jesteś zadowolony z zakupu? #{questionnaireBean.shoppingSatisfaction}"/>
+                    <h:outputText value="Czy jesteś zadowolony z naszych pracowników? #{questionnaireBean.staffSatisfaction}"/>
+                </c:when>
+                <c:otherwise>
+                    <h:outputText value="Czy jesteś zadowolona z zakupu? #{questionnaireBean.shoppingSatisfaction}"/>
+                    <h:outputText value="Czy jesteś zadowolona z naszych pracowników? #{questionnaireBean.staffSatisfaction}"/>
+                </c:otherwise>
+            </c:choose>
+
+            <h:outputText value="Uwagi: #{questionnaireBean.otherOpinion}"/>
+
+
+        </c:when>
+        <c:otherwise>
+
+
+
+            <h:outputText value="Ile jesteś w stanie przeznaczyc miesięcznie na zakup ubrania? #{questionnaireBean.moneyOnClothesPerMonth}"/>
+
+            <br/>
+            <h:outputText value="Gdzie najczęściej dokonujesz zakupów ubrania?"/>
+            <ui:repeat value="#{questionnaireBean.mostVisitedShops}" var="shop">
+                <h:outputText value="#{shop}"/>
+                <h:outputText value=" "/>
+            </ui:repeat>
+
+            <br/>
+            <h:outputText value="Jak często dokonujesz zakupu ubrania? #{questionnaireBean.howRecentlyBuying}"/>
+
+            <br/>
+            <h:outputText value="W jakich kolorach preferujesz ubrania? "/>
+            <ui:repeat value="#{questionnaireBean.preferredColors}" var="color">
+                <h:outputText value="#{color}"/>
+                <h:outputText value=" "/>
+            </ui:repeat>
+
+
+
+
+        </c:otherwise>
+
+    </c:choose>
+
 
 
 </f:view>
