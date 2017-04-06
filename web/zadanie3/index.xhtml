@@ -18,7 +18,7 @@
             <h:message for="surnameField"/>
             <h:outputLabel value="Wiek"/>
             <h:inputText id="ageField" required="true" value="#{userBean.user.age}">
-                <f:validateLongRange minimum="0" maximum="120"/>
+                <f:validateDoubleRange minimum="0" maximum="120"/>
             </h:inputText>
             <h:message for="ageField"/>
             <h:outputLabel value="Płeć"/>
